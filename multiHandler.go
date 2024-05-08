@@ -22,7 +22,10 @@ func multiHandler(w http.ResponseWriter, r *http.Request) {
 	retVal.Notice = "Free for light, non-commericial use. For heavy or commercial use, please contact us."
 	retVal.Results = make(map[string]int)
 
-	input := r.URL.Query().Get("domains")
+	input := r.PostFormValue("domains")
+	if input == "" {
+		input = r.URL.Query().Get("domains")
+	}
 	if input == "" {
 		retVal.Success = false
 		retVal.Message = "domains query parameter is required"
