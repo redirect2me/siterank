@@ -36,6 +36,9 @@ func multiHandler(w http.ResponseWriter, r *http.Request) {
 	domains := re.Split(input, -1)
 
 	for _, rawDomain := range domains {
+		if rawDomain == "" {
+			continue
+		}
 		domain, pureErr := purifyDomain(rawDomain)
 		if pureErr != nil {
 			retVal.Messages = append(retVal.Messages, fmt.Sprintf("Error: %s does not appear to be valid (%s)", rawDomain, pureErr.Error()))
