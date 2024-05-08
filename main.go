@@ -27,6 +27,7 @@ func main() {
 	http.HandleFunc("/favicon.svg", staticHandler.ServeHTTP)
 	http.HandleFunc("/images/", staticHandler.ServeHTTP)
 	http.HandleFunc("/api/rank.json", apiHandler)
+	http.HandleFunc("/api/multiple.json", multiHandler)
 
 	err := http.ListenAndServe(listenAddress+":"+strconv.Itoa(listenPort), nil)
 	if err != nil {
