@@ -16,6 +16,7 @@ type Status struct {
 	Commit    string `json:"commit"`
 	LastMod   string `json:"lastmod"`
 	Tech      string `json:"tech"`
+	RankDate  string `json:"rankings"`
 }
 
 func statusHandler(w http.ResponseWriter, r *http.Request) {
@@ -27,6 +28,7 @@ func statusHandler(w http.ResponseWriter, r *http.Request) {
 	status.Commit = COMMIT
 	status.LastMod = LASTMOD
 	status.Tech = runtime.Version()
+	status.RankDate = rankDate
 
 	handleJson(w, r, status)
 }

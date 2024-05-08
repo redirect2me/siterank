@@ -2,8 +2,10 @@
 FROM golang:1.22-alpine as builder
 RUN apk update && \
     apk upgrade && \
-    apk --no-cache add git upx ca-certificates
+    apk --no-cache add git upx wget ca-certificates
 RUN mkdir /build
+RUN wget https://tranco-list.eu/top-1m.csv.zip
+
 ADD . /build/
 WORKDIR /build
 ARG COMMIT
@@ -17,9 +19,9 @@ RUN \
     -o siterank \
     *.go \
     && upx siterank
-
 FROM scratch
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+COPY --from=builder /build/top-1m.csv.zip /app/
 COPY --from=builder /build/siterank /app/
 ENV PORT 4000
 ENTRYPOINT ["/app/siterank"]
