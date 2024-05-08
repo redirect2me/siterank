@@ -2,7 +2,7 @@
 FROM golang:1.22-alpine as builder
 RUN apk update && \
     apk upgrade && \
-    apk --no-cache add git
+    apk --no-cache add git upx ca-certificates
 RUN mkdir /build
 ADD . /build/
 WORKDIR /build
@@ -13,12 +13,13 @@ RUN \
     CGO_ENABLED=0 GOOS=linux go build \
     -a \
     -installsuffix cgo \
-    -ldflags "-X main.COMMIT=$COMMIT -X main.LASTMOD=$LASTMOD -extldflags '-static'" \
-    -o siterank *.go
+    -ldflags "-s -w -X main.COMMIT=$COMMIT -X main.LASTMOD=$LASTMOD -extldflags '-static'" \
+    -o siterank \
+    *.go \
+    && upx siterank
 
 FROM scratch
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /build/siterank /app/
-WORKDIR /app
 ENV PORT 4000
-ENTRYPOINT ["./siterank"]
+ENTRYPOINT ["/app/siterank"]
