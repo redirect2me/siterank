@@ -11,6 +11,5 @@ _site/
 .sass-cache/
 tmp/
 *.tmp
-top-1m.csv.zip
 vendor/
 .wrangler/

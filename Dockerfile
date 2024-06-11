@@ -4,10 +4,10 @@ RUN apk update && \
     apk upgrade && \
     apk --no-cache add git upx wget ca-certificates
 RUN mkdir /build
+WORKDIR /build
 RUN wget https://tranco-list.eu/top-1m.csv.zip
 
 ADD . /build/
-WORKDIR /build
 ARG COMMIT
 ARG LASTMOD
 RUN echo "INFO: building for $COMMIT on $LASTMOD"
