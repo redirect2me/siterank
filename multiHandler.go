@@ -12,6 +12,7 @@ type MultiResponse struct {
 	Results  map[string]int `json:"results"`
 	Messages []string       `json:"messages"`
 	Notice   string         `json:"notice"`
+	AsOf     string         `json:"as_of"`
 }
 
 var re = regexp.MustCompile("[ ,\t\n\r]+")
@@ -56,6 +57,7 @@ func multiHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
+	retVal.AsOf = rankDate
 	retVal.Success = true
 	retVal.Message = "OK"
 

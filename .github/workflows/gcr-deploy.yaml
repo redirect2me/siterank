@@ -5,10 +5,12 @@ on:
     branches:
     - main
 
+  # every Monday at 00:42
+  schedule:
+    - cron: "42 0 * * 1"
+
   workflow_dispatch:
 
-# Environment variables available to all jobs and steps in this workflow
-# NOTE: these aren't really secret, but there aren't non-secret settings
 env:
   RUN_PROJECT: ${{ secrets.RUN_PROJECT }}
   RUN_REGION: ${{ secrets.RUN_REGION }}

@@ -9,6 +9,7 @@ type ApiResponse struct {
 	Input   string `json:"input"`
 	Rank    int    `json:"rank"`
 	Notice  string `json:"notice"`
+	AsOf    string `json:"as_of"`
 }
 
 func apiHandler(w http.ResponseWriter, r *http.Request) {
@@ -42,6 +43,7 @@ func apiHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	retVal.AsOf = rankDate
 	retVal.Success = true
 	retVal.Message = "OK"
 	retVal.Rank = rank
