@@ -28,6 +28,7 @@ func main() {
 	http.HandleFunc("/images/", staticHandler.ServeHTTP)
 	http.HandleFunc("/api/rank.json", apiHandler)
 	http.HandleFunc("/api/multiple.json", multiHandler)
+	http.HandleFunc("/api/random.json", randomHandler)
 
 	err := http.ListenAndServe(listenAddress+":"+strconv.Itoa(listenPort), nil)
 	if err != nil {
